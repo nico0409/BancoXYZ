@@ -12,5 +12,11 @@
       "badRequest": "Dados inválidos. Verifique as informações.",
       "network": "Ocorreu um erro de conexão. Verifique sua internet."
     }
+  },
+  "home": {
+    "greeting": "Olá",
+    "availableBalance": "Saldo disponível",
+    "refreshing": "Atualizando saldo...",
+    "errorFetching": "Não foi possível carregar o saldo."
   }
 }
