@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-secure-store",
+      "@sentry/react-native",
+      "@react-native-community/datetimepicker",
+      "expo-localization"
+    ]
   }
 }
