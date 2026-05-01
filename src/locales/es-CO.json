@@ -18,5 +18,10 @@
     "availableBalance": "Saldo disponible",
     "refreshing": "Actualizando saldo...",
     "errorFetching": "No se pudo cargar el saldo."
+  },
+  "transfer": {
+    "recentTitle": "Últimas Transacciones",
+    "noTransactions": "Aún no tienes transacciones recientes.",
+    "viewAll": "Ver historial"
   }
 }
