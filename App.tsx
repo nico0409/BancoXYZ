@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppNavigator } from '@/navigation/AppNavigator';
 import theme from '@/theme/theme';
+import '@/locales';
 
 const queryClient = new QueryClient({
   defaultOptions: {

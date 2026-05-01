@@ -21,10 +21,20 @@ export function LoginScreen() {
     defaultValues: { email: '', password: '' },
   });
 
-  const { mutate: loginMutation, isPending } = useLoginMutation();
+  const { mutate: loginMutation, isPending, isError, error } = useLoginMutation();
 
   const onSubmit = (data: LoginFormValues) => {
     loginMutation(data);
+  };
+
+  const getErrorMessage = () => {
+    if (error?.response?.status === 401) {
+      return 'E-mail ou senha incorretos. Tente novamente.';
+    }
+    if (error?.response?.status === 400) {
+      return 'Dados inválidos. Verifique as informações.';
+    }
+    return 'Ocorreu um erro de conexão. Verifique sua internet.';
   };
 
   return (
@@ -87,6 +97,14 @@ export function LoginScreen() {
                 />
               )}
             />
+
+            {isError && (
+              <Box backgroundColor="primaryLight" padding="s" borderRadius="m" marginTop="m">
+                <Text variant="caption" color="error" textAlign="center" fontWeight="bold">
+                  {getErrorMessage()}
+                </Text>
+              </Box>
+            )}
 
             <Box marginTop="l">
               <Button label="Entrar" onPress={handleSubmit(onSubmit)} isLoading={isPending} />

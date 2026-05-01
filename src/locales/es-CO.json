@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "welcomeTitle": "Bienvenido a BancoXYZ",
+    "welcomeSubtitle": "Accede a tu cuenta para gestionar tus finanzas de forma segura.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "gabriel@topaz.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "••••",
+    "submitButton": "Ingresar",
+    "errors": {
+      "unauthorized": "Correo o contraseña incorrectos. Inténtalo nuevamente.",
+      "badRequest": "Datos inválidos. Verifica la información.",
+      "network": "Ocurrió un error de conexión. Verifica tu internet."
+    }
+  }
+}

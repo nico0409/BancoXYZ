@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import { LoginFormValues } from '../schemas/loginSchema';
 import { useAuthStore } from '../store/useAuthStore';
@@ -17,8 +18,8 @@ interface LoginResponse {
 export const useLoginMutation = () => {
   const login = useAuthStore((state) => state.login);
 
-  return useMutation({
-    mutationFn: async (credentials: LoginFormValues) => {
+  return useMutation<LoginResponse, AxiosError, LoginFormValues>({
+    mutationFn: async (credentials) => {
       const response = await apiClient.post<LoginResponse>('/login', credentials);
       return response.data;
     },
@@ -26,7 +27,7 @@ export const useLoginMutation = () => {
       login(data.token, data.user);
     },
     onError: (error) => {
-      console.error('Falha no login:', error);
+      console.error('Falha no login [Código]:', error.response?.status);
     },
   });
 };
