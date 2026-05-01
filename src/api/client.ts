@@ -17,7 +17,7 @@ apiClient.interceptors.request.use(
       const token = await SecureStore.getItemAsync('userToken');
 
       if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.set('Authorization', `Bearer ${token}`);
       }
     } catch (error) {
       console.error('Error al recuperar el token de seguridad:', error);
