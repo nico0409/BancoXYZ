@@ -14,9 +14,9 @@ export function BalanceCard() {
   const theme = useTheme<Theme>();
   const { data, isLoading, isError } = useBalanceQuery();
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value: number, serverCurrency?: string) => {
     const locale = i18n.language.includes('es') ? 'es-CO' : 'pt-BR';
-    const currency = i18n.language.includes('es') ? 'COP' : 'BRL';
+    const currency = serverCurrency || (i18n.language.includes('es') ? 'COP' : 'BRL');
     return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
   };
 
@@ -48,7 +48,7 @@ export function BalanceCard() {
         </Text>
       ) : (
         <Text variant="header" color="text" fontSize={36}>
-          {formatCurrency(data?.balance || 0)}
+          {formatCurrency(data?.accountBalance || 0, data?.currency)}
         </Text>
       )}
     </Box>
