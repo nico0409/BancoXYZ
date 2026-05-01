@@ -5,13 +5,9 @@ import React from 'react';
 
 import Box from '@/components/Box';
 import Text from '@/components/Text';
+import { HomeScreen } from '@/screens/HomeScreen';
 import { Theme } from '@/theme/theme';
 
-const HomePlaceholder = () => (
-  <Box flex={1} justifyContent="center" alignItems="center">
-    <Text>Inicio</Text>
-  </Box>
-);
 const TransferPlaceholder = () => (
   <Box flex={1} justifyContent="center" alignItems="center">
     <Text>Transferir</Text>
@@ -42,7 +38,7 @@ export function MainTabNavigator() {
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomePlaceholder}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => <Home color={color} size={24} />,
           tabBarLabel: 'Início',
