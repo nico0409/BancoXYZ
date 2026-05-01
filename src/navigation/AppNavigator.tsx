@@ -7,10 +7,12 @@ import { AuthNavigator } from './AuthNavigator';
 import { MainTabNavigator } from './MainTabNavigator';
 
 import Box from '@/components/Box';
+import { useAutoLogout } from '@/features/auth/hooks/useAutoLogout';
 import { useAuthStore } from '@/features/auth/store/useAuthStore';
 import { Theme } from '@/theme/theme';
 
 export function AppNavigator() {
+  useAutoLogout();
   const { token, isRestoring, restoreSession } = useAuthStore();
   const theme = useTheme<Theme>();
 
