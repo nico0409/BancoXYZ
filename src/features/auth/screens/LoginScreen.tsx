@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 
 import { useLoginMutation } from '../api/useLoginMutation';
@@ -22,19 +23,19 @@ export function LoginScreen() {
   });
 
   const { mutate: loginMutation, isPending, isError, error } = useLoginMutation();
-
+  const { t } = useTranslation();
   const onSubmit = (data: LoginFormValues) => {
     loginMutation(data);
   };
 
   const getErrorMessage = () => {
     if (error?.response?.status === 401) {
-      return 'E-mail ou senha incorretos. Tente novamente.';
+      return t('auth.errors.unauthorized');
     }
     if (error?.response?.status === 400) {
-      return 'Dados inválidos. Verifique as informações.';
+      return t('auth.errors.badRequest');
     }
-    return 'Ocorreu um erro de conexão. Verifique sua internet.';
+    return t('auth.errors.network');
   };
 
   return (
@@ -57,10 +58,10 @@ export function LoginScreen() {
 
           <Box marginBottom="xl">
             <Text variant="header" color="primary" marginBottom="s">
-              Bem-vindo ao BancoXYZ
+              {t('auth.welcomeTitle')}
             </Text>
             <Text variant="body" color="textSecondary">
-              Acesse sua conta para gerenciar suas finanças de forma segura.
+              {t('auth.welcomeSubtitle')}
             </Text>
           </Box>
 
@@ -70,8 +71,8 @@ export function LoginScreen() {
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  label="E-mail"
-                  placeholder="gabriel@topaz.com"
+                  label={t('auth.emailLabel')}
+                  placeholder={t('auth.emailPlaceholder')}
                   autoCapitalize="none"
                   keyboardType="email-address"
                   onBlur={onBlur}
@@ -87,7 +88,7 @@ export function LoginScreen() {
               name="password"
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  label="Senha"
+                  label={t('auth.passwordLabel')}
                   placeholder="••••"
                   secureTextEntry
                   onBlur={onBlur}
@@ -107,7 +108,11 @@ export function LoginScreen() {
             )}
 
             <Box marginTop="l">
-              <Button label="Entrar" onPress={handleSubmit(onSubmit)} isLoading={isPending} />
+              <Button
+                label={t('auth.submitButton')}
+                onPress={handleSubmit(onSubmit)}
+                isLoading={isPending}
+              />
             </Box>
           </Box>
         </Box>
