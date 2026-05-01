@@ -2,17 +2,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'; // <-- Añade TouchableOpacity
 
 import { useLoginMutation } from '../api/useLoginMutation';
 import { loginSchema, LoginFormValues } from '../schemas/loginSchema';
 
 import Box from '@/components/Box';
 import Button from '@/components/Button';
+import LanguageToggle from '@/components/LanguageToggle';
 import Text from '@/components/Text';
 import TextInput from '@/components/TextInput';
 
 export function LoginScreen() {
+  const { t } = useTranslation();
+
   const {
     control,
     handleSubmit,
@@ -23,18 +26,14 @@ export function LoginScreen() {
   });
 
   const { mutate: loginMutation, isPending, isError, error } = useLoginMutation();
-  const { t } = useTranslation();
+
   const onSubmit = (data: LoginFormValues) => {
     loginMutation(data);
   };
 
   const getErrorMessage = () => {
-    if (error?.response?.status === 401) {
-      return t('auth.errors.unauthorized');
-    }
-    if (error?.response?.status === 400) {
-      return t('auth.errors.badRequest');
-    }
+    if (error?.response?.status === 401) return t('auth.errors.unauthorized');
+    if (error?.response?.status === 400) return t('auth.errors.badRequest');
     return t('auth.errors.network');
   };
 
@@ -55,6 +54,10 @@ export function LoginScreen() {
             backgroundColor="primary"
             opacity={0.05}
           />
+
+          <Box position="absolute" top={60} right={24} zIndex={10}>
+            <LanguageToggle />
+          </Box>
 
           <Box marginBottom="xl">
             <Text variant="header" color="primary" marginBottom="s">
@@ -89,7 +92,7 @@ export function LoginScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   label={t('auth.passwordLabel')}
-                  placeholder="••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   secureTextEntry
                   onBlur={onBlur}
                   onChangeText={onChange}
