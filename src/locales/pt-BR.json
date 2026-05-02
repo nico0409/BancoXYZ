@@ -1,4 +1,8 @@
 {
+  "common": {
+    "accept": "Aceitar",
+    "cancel": "Cancelar"
+  },
   "auth": {
     "welcomeTitle": "Bem-vindo ao BancoXYZ",
     "welcomeSubtitle": "Acesse sua conta para gerenciar suas finanças de forma segura.",
@@ -39,7 +43,10 @@
     "valueLabel": "Valor da Transferência",
     "valuePlaceholder": "0.00",
     "dateLabel": "Data da Transferência",
-    "continueButton": "Revisar Transferência"
+    "continueButton": "Revisar Transferência",
+    "errors": {
+      "insufficientFunds": "Saldo insuficiente para realizar esta transferência."
+    }
   },
   "transferReview": {
     "reviewTitle": "Revisão da Transferência",
@@ -47,11 +54,14 @@
     "reviewPayeer": "Destinatário (Documento)",
     "reviewAmount": "Valor a transferir",
     "reviewDate": "Data de execução",
-    "confirmButton": "Confirmar Transferência"
+    "confirmButton": "Confirmar Transferência",
+    "scheduleButton": "Agendar Transferência"
   },
   "transferSuccess": {
     "successTitle": "Transferência Concluída!",
     "successSubtitle": "O valor foi enviado com sucesso para o destinatário.",
+    "scheduledTitle": "Transferência Agendada!",
+    "scheduledSubtitle": "Sua transferência foi programada e será executada na data indicada.",
     "backToHomeButton": "Voltar ao Início"
   }
 }

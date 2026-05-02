@@ -16,9 +16,9 @@ import { Theme } from '@/theme/theme';
 
 export type TransferStackParamList = {
   TransferForm: undefined;
-  TransferReview: { transferData: TransferFormValues };
+  TransferReview: { transferData: TransferFormValues; isScheduled: boolean };
   TransferError: { failedData?: TransferFormValues };
-  TransferSuccess: undefined;
+  TransferSuccess: { isScheduled: boolean };
 };
 
 export type TransferNavProp<T extends keyof TransferStackParamList> = NativeStackNavigationProp<

@@ -21,7 +21,7 @@ export function TransferReviewScreen() {
   const route = useRoute<TransferRouteProp<'TransferReview'>>();
   const navigation = useNavigation<TransferNavProp<'TransferReview'>>();
 
-  const { transferData } = route.params;
+  const { transferData, isScheduled } = route.params;
 
   const { mutate: executeTransfer, isPending } = useTransferMutation();
 
@@ -38,7 +38,7 @@ export function TransferReviewScreen() {
       onSuccess: () => {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'TransferSuccess' }],
+          routes: [{ name: 'TransferSuccess', params: { isScheduled } }],
         });
       },
       onError: () => {
@@ -121,7 +121,9 @@ export function TransferReviewScreen() {
 
           <Box paddingBottom="xl">
             <Button
-              label={t('transferReview.confirmButton')}
+              label={
+                isScheduled ? t('transferReview.scheduleButton') : t('transferReview.confirmButton')
+              }
               onPress={handleConfirm}
               isLoading={isPending}
             />
