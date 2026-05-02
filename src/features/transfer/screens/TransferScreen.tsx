@@ -26,7 +26,8 @@ export function TransferScreen() {
   const theme = useTheme<Theme>();
   const navigation = useNavigation<NativeStackNavigationProp<TransferStackParamList>>();
   const [isScheduled, setIsScheduled] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [tomorrow] = useState(() => new Date(Date.now() + 86400000));
+  const [date, setDate] = useState(tomorrow);
 
   const { data: balanceData } = useBalanceQuery();
   const serverCurrency = balanceData?.currency || 'BRL';
@@ -35,13 +36,15 @@ export function TransferScreen() {
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    setError,
+    formState: { errors, isValid },
   } = useForm<TransferFormValues>({
     resolver: zodResolver(transferSchema),
+    mode: 'onChange',
     defaultValues: {
       payeerDocument: '',
       currency: 'BRL',
-      transferDate: new Date().toISOString().split('T')[0],
+      transferDate: tomorrow.toISOString().split('T')[0],
     },
   });
 
@@ -54,6 +57,14 @@ export function TransferScreen() {
   const formatDateToApi = (selectedDate: Date) => selectedDate.toISOString().split('T')[0];
 
   const onSubmit = (data: TransferFormValues) => {
+    if (!isScheduled && balanceData && data.value > balanceData.accountBalance) {
+      setError('value', {
+        type: 'manual',
+        message: t('newTransfer.errors.insufficientFunds'),
+      });
+      return;
+    }
+
     const finalData = {
       ...data,
       transferDate: isScheduled ? data.transferDate : formatDateToApi(new Date()),
@@ -138,7 +149,11 @@ export function TransferScreen() {
               />
 
               <Box flex={1} justifyContent="flex-end" marginTop="xl">
-                <Button label={t('newTransfer.continueButton')} onPress={handleSubmit(onSubmit)} />
+                <Button
+                  label={t('newTransfer.continueButton')}
+                  onPress={handleSubmit(onSubmit)}
+                  disabled={!isValid}
+                />
               </Box>
             </Box>
           </Box>

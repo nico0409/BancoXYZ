@@ -43,7 +43,10 @@
     "valueLabel": "Valor de la Transferencia",
     "valuePlaceholder": "0.00",
     "dateLabel": "Fecha de Transferencia",
-    "continueButton": "Revisar Transferencia"
+    "continueButton": "Revisar Transferencia",
+    "errors": {
+      "insufficientFunds": "Saldo insuficiente para realizar esta transferencia."
+    }
   },
   "transferReview": {
     "reviewTitle": "Revisión de Transferencia",

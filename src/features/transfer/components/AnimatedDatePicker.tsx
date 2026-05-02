@@ -21,10 +21,9 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
   const theme = useTheme<Theme>();
   const [showPicker, setShowPicker] = useState(false);
 
-  // useState con lazy initializer: se crea una sola vez, es un valor de React (no un ref)
-  // por lo que el linter permite usarlo en el render sin restricciones.
   const [anim] = useState(() => new Animated.Value(visible ? 1 : 0));
   const [slideX] = useState(() => anim.interpolate({ inputRange: [0, 1], outputRange: [60, 0] }));
+  const [tomorrow] = useState(() => new Date(Date.now() + 86400000));
 
   useEffect(() => {
     if (visible) {
@@ -41,12 +40,18 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
         duration: 220,
         easing: Easing.in(Easing.cubic),
         useNativeDriver: true,
-        // setShowPicker dentro del callback (async) es válido para el linter
       }).start(({ finished }) => {
         if (finished) setShowPicker(false);
       });
     }
   }, [visible, anim]);
+
+  const handleChange = (event: DateTimePickerEvent, date?: Date) => {
+    if (Platform.OS === 'android') {
+      setShowPicker(false);
+    }
+    onChange(event, date);
+  };
 
   return (
     <Animated.View
@@ -78,17 +83,15 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
             value={value}
             mode="date"
             display="spinner"
-            minimumDate={new Date()}
-            onChange={onChange}
+            minimumDate={tomorrow}
+            onChange={handleChange}
+            positiveButton={{ label: t('common.accept'), textColor: theme.colors.primary }}
+            negativeButton={{ label: t('common.cancel'), textColor: theme.colors.textSecondary }}
           />
         )}
 
-        {showPicker && (
-          <Button
-            label={Platform.OS === 'ios' ? 'Confirmar Data' : 'Confirmar'}
-            onPress={() => setShowPicker(false)}
-            variant="outline"
-          />
+        {showPicker && Platform.OS === 'ios' && (
+          <Button label="Confirmar" onPress={() => setShowPicker(false)} variant="outline" />
         )}
       </Box>
     </Animated.View>
