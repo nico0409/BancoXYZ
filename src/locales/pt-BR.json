@@ -63,5 +63,12 @@
     "scheduledTitle": "Transferência Agendada!",
     "scheduledSubtitle": "Sua transferência foi programada e será executada na data indicada.",
     "backToHomeButton": "Voltar ao Início"
+  },
+  "history": {
+    "title": "Histórico de Transferências",
+    "searchNamePlaceholder": "Buscar por nome do destinatário...",
+    "searchValuePlaceholder": "Valor exato",
+    "searchDatePlaceholder": "Data (YYYY-MM-DD)",
+    "emptyState": "Nenhuma transferência encontrada com estes filtros."
   }
 }
