@@ -48,5 +48,10 @@
     "reviewAmount": "Valor a transferir",
     "reviewDate": "Data de execução",
     "confirmButton": "Confirmar Transferência"
+  },
+  "transferSuccess": {
+    "successTitle": "Transferência Concluída!",
+    "successSubtitle": "O valor foi enviado com sucesso para o destinatário.",
+    "backToHomeButton": "Voltar ao Início"
   }
 }

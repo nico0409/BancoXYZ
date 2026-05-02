@@ -21,10 +21,8 @@ export function TransferReviewScreen() {
   const route = useRoute<TransferRouteProp<'TransferReview'>>();
   const navigation = useNavigation<TransferNavProp<'TransferReview'>>();
 
-  // Los params ya están tipados, sin necesidad de cast manual
   const { transferData } = route.params;
 
-  // Instanciamos nuestra mutación (sin pasar parámetros iniciales)
   const { mutate: executeTransfer, isPending } = useTransferMutation();
 
   const formatCurrency = (value: number) => {
@@ -36,16 +34,14 @@ export function TransferReviewScreen() {
   };
 
   const handleConfirm = () => {
-    // Ejecutamos el POST inyectando los datos
     executeTransfer(transferData, {
       onSuccess: () => {
-        // Si responde 200 OK, la caché del saldo ya se invalidó en el hook.
-        // Navegamos a la pantalla de éxito.
-        navigation.navigate('TransferSuccess');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'TransferSuccess' }],
+        });
       },
       onError: () => {
-        // Si falla (ej. 400 o 500), navegamos a nuestra pantalla estratégica de error
-        // pasándole los datos por si el usuario quiere agendarlos.
         navigation.navigate('TransferError', { failedData: transferData });
       },
     });
@@ -121,10 +117,8 @@ export function TransferReviewScreen() {
             </Box>
           </Box>
 
-          {/* Espaciador flexible para empujar el botón al fondo */}
           <Box flex={1} minHeight={40} />
 
-          {/* Botón de Confirmación */}
           <Box paddingBottom="xl">
             <Button
               label={t('transferReview.confirmButton')}

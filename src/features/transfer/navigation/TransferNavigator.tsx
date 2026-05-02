@@ -10,6 +10,7 @@ import { TransferFormValues } from '../schemas/transferSchema';
 import { TransferErrorScreen } from '../screens/TransferErrorScreen';
 import { TransferReviewScreen } from '../screens/TransferReviewScreen';
 import { TransferScreen } from '../screens/TransferScreen';
+import { TransferSuccessScreen } from '../screens/TransferSuccessScreen';
 
 import { Theme } from '@/theme/theme';
 
@@ -46,6 +47,11 @@ export function TransferNavigator() {
       <Stack.Screen name="TransferForm" component={TransferScreen} />
       <Stack.Screen name="TransferReview" component={TransferReviewScreen} />
       <Stack.Screen name="TransferError" component={TransferErrorScreen} />
+      <Stack.Screen
+        name="TransferSuccess"
+        component={TransferSuccessScreen}
+        options={{ animation: 'fade' }}
+      />
     </Stack.Navigator>
   );
 }
