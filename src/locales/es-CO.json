@@ -22,11 +22,11 @@
   "transfer": {
     "recentTitle": "Últimas Transacciones",
     "noTransactions": "Aún no tienes transacciones recientes.",
-    "viewAll": "Ver historial"
-  },
-  "errorTitle": "Falha na Transação",
-  "errorMessage": "Não foi possível concluir a transferência neste momento. O sistema pode estar instável.",
-  "schedulePrompt": "Deseja agendar esta transferência para uma data futura?",
-  "scheduleButton": "Agendar transferência",
-  "retryButton": "Tentar novamente"
+    "viewAll": "Ver historial",
+    "errorTitle": "Fallo en la Transacción",
+    "errorMessage": "No fue posible concluir la transferencia en este momento. El sistema puede estar inestable.",
+    "schedulePrompt": "¿Deseas agendar esta transferencia para una fecha futura?",
+    "scheduleButton": "Agendar transferencia",
+    "retryButton": "Intentar nuevamente"
+  }
 }
