@@ -58,6 +58,7 @@ export function ProfileModal({ visible, onClose }: ProfileModalProps) {
             onPress={onClose}
             activeOpacity={0.7}
             hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
+            testID="close-profile-modal"
           >
             <X color={theme.colors.textSecondary} size={24} />
           </TouchableOpacity>
