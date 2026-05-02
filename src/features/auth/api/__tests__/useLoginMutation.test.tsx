@@ -32,6 +32,11 @@ describe('useLoginMutation Endpoint', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useAuthStore as unknown as jest.Mock).mockImplementation(() => mockLogin);
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('llama al endpoint POST /login y guarda el token en caso de éxito', async () => {
@@ -54,11 +59,12 @@ describe('useLoginMutation Endpoint', () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    // Verificamos que se haya hecho la petición al endpoint correcto
-    expect(apiClient.post).toHaveBeenCalledWith('/login', {
-      email: 'test@example.com',
-      password: 'password123',
-    });
+    // Verificamos que se haya hecho la petición al endpoint correcto con su baseURL
+    expect(apiClient.post).toHaveBeenCalledWith(
+      '/login',
+      { email: 'test@example.com', password: 'password123' },
+      { baseURL: 'https://test.api.bancoxyz.com' },
+    );
 
     // Verificamos que onSuccess invocó la función login del store
     expect(mockLogin).toHaveBeenCalledWith('fake-jwt-token-123', mockResponse.data.user);
