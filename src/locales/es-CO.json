@@ -1,4 +1,8 @@
 {
+  "common": {
+    "accept": "Aceptar",
+    "cancel": "Cancelar"
+  },
   "auth": {
     "welcomeTitle": "Bienvenido a BancoXYZ",
     "welcomeSubtitle": "Accede a tu cuenta para gestionar tus finanzas de forma segura.",
@@ -47,11 +51,14 @@
     "reviewPayeer": "Destinatario (Documento)",
     "reviewAmount": "Valor a transferir",
     "reviewDate": "Fecha de ejecución",
-    "confirmButton": "Confirmar Transferencia"
+    "confirmButton": "Confirmar Transferencia",
+    "scheduleButton": "Agendar Transferencia"
   },
   "transferSuccess": {
     "successTitle": "¡Transferencia Completada!",
     "successSubtitle": "El valor fue enviado exitosamente al destinatario.",
+    "scheduledTitle": "¡Transferencia Agendada!",
+    "scheduledSubtitle": "Tu transferencia fue programada y se ejecutará en la fecha indicada.",
     "backToHomeButton": "Volver al Inicio"
   }
 }

@@ -59,7 +59,7 @@ export function TransferScreen() {
       transferDate: isScheduled ? data.transferDate : formatDateToApi(new Date()),
     };
 
-    navigation.navigate('TransferReview', { transferData: finalData });
+    navigation.navigate('TransferReview', { transferData: finalData, isScheduled });
   };
 
   return (
