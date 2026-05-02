@@ -40,5 +40,13 @@
     "valuePlaceholder": "0.00",
     "dateLabel": "Data da Transferência",
     "continueButton": "Revisar Transferência"
+  },
+  "transferReview": {
+    "reviewTitle": "Revisão da Transferência",
+    "reviewSubtitle": "Confira os dados antes de confirmar.",
+    "reviewPayeer": "Destinatário (Documento)",
+    "reviewAmount": "Valor a transferir",
+    "reviewDate": "Data de execução",
+    "confirmButton": "Confirmar Transferência"
   }
 }
