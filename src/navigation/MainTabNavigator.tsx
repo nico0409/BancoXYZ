@@ -5,14 +5,9 @@ import React from 'react';
 
 import Box from '@/components/Box';
 import Text from '@/components/Text';
+import { TransferScreen } from '@/features/transfer/screens/TransferScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { Theme } from '@/theme/theme';
-
-const TransferPlaceholder = () => (
-  <Box flex={1} justifyContent="center" alignItems="center">
-    <Text>Transferir</Text>
-  </Box>
-);
 const HistoryPlaceholder = () => (
   <Box flex={1} justifyContent="center" alignItems="center">
     <Text>Historial</Text>
@@ -46,7 +41,7 @@ export function MainTabNavigator() {
       />
       <Tab.Screen
         name="TransferTab"
-        component={TransferPlaceholder}
+        component={TransferScreen}
         options={{
           tabBarIcon: ({ color }) => <Send color={color} size={24} />,
           tabBarLabel: 'Transferir',

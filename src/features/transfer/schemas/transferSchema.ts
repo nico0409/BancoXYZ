@@ -8,6 +8,7 @@ export const transferSchema = z.object({
       message: 'O valor deve ser um número válido',
     })
     .positive('O valor deve ser maior que zero'),
+  transferDate: z.string().min(10, 'A data é obrigatória'),
 });
 
 export type TransferFormValues = z.infer<typeof transferSchema>;

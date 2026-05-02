@@ -28,5 +28,17 @@
     "schedulePrompt": "¿Deseas agendar esta transferencia para una fecha futura?",
     "scheduleButton": "Agendar transferencia",
     "retryButton": "Intentar nuevamente"
+  },
+  "newTransfer": {
+    "newTransferTitle": "Nueva Transferencia",
+    "newTransferSubtitle": "Envía dinero con seguridad.",
+    "tabImmediate": "Ahora",
+    "tabScheduled": "Agendar",
+    "docLabel": "Documento del Destinatario",
+    "docPlaceholder": "12345678900",
+    "valueLabel": "Valor de la Transferencia",
+    "valuePlaceholder": "0.00",
+    "dateLabel": "Fecha de Transferencia",
+    "continueButton": "Revisar Transferencia"
   }
 }
