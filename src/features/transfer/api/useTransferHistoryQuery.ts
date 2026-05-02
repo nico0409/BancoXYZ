@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import apiClient from '@/api/client';
+import { API_ENDPOINTS } from '@/config/apiEndpoints';
 
 export interface Payeer {
   document: string;
@@ -18,7 +19,8 @@ export const useTransferHistoryQuery = () => {
   return useQuery({
     queryKey: ['transferHistory'],
     queryFn: async () => {
-      const response = await apiClient.get<TransferItem[]>('/transferlist');
+      const { baseURL, path } = API_ENDPOINTS.getTransferHistory;
+      const response = await apiClient.get<TransferItem[]>(path, { baseURL });
       return response.data;
     },
 
