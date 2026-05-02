@@ -1,9 +1,11 @@
 import { useTheme } from '@shopify/restyle';
+import { Eye, EyeOff } from 'lucide-react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import { useBalanceQuery } from '../api/useBalanceQuery';
+import { useBalanceVisibilityStore } from '../store/useBalanceVisibilityStore';
 
 import Box from '@/components/Box';
 import Text from '@/components/Text';
@@ -13,6 +15,9 @@ export function BalanceCard() {
   const { t, i18n } = useTranslation();
   const theme = useTheme<Theme>();
   const { data, isLoading, isError } = useBalanceQuery();
+
+  const isVisible = useBalanceVisibilityStore((state) => state.isBalanceVisible);
+  const toggle = useBalanceVisibilityStore((state) => state.toggleBalanceVisibility);
 
   const formatCurrency = (value: number, serverCurrency?: string) => {
     const locale = i18n.language.includes('es') ? 'es-CO' : 'pt-BR';
@@ -25,16 +30,29 @@ export function BalanceCard() {
       backgroundColor="primaryLight"
       padding="l"
       borderRadius="l"
-      // Reemplazamos 'slate800' por 'text', que sí existe en nuestro Theme
       shadowColor="text"
       shadowOffset={{ width: 0, height: 4 }}
       shadowOpacity={0.05}
       shadowRadius={10}
       elevation={3}
     >
-      <Text variant="caption" color="textSecondary" marginBottom="s">
-        {t('home.availableBalance')}
-      </Text>
+      {/* Encabezado: etiqueta + botón ojo */}
+      <Box flexDirection="row" justifyContent="space-between" alignItems="center" marginBottom="s">
+        <Text variant="caption" color="textSecondary">
+          {t('home.availableBalance')}
+        </Text>
+        <TouchableOpacity
+          onPress={toggle}
+          activeOpacity={0.7}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          {isVisible ? (
+            <EyeOff color={theme.colors.textSecondary} size={18} />
+          ) : (
+            <Eye color={theme.colors.textSecondary} size={18} />
+          )}
+        </TouchableOpacity>
+      </Box>
 
       {isLoading ? (
         <ActivityIndicator
@@ -46,9 +64,13 @@ export function BalanceCard() {
         <Text variant="body" color="error" marginTop="xs">
           {t('home.errorFetching')}
         </Text>
-      ) : (
+      ) : isVisible ? (
         <Text variant="header" color="text" fontSize={36}>
           {formatCurrency(data?.accountBalance || 0, data?.currency)}
+        </Text>
+      ) : (
+        <Text variant="header" color="text" fontSize={36} letterSpacing={4}>
+          •••••••
         </Text>
       )}
     </Box>
