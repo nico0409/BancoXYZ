@@ -23,5 +23,10 @@
     "recentTitle": "Últimas Transações",
     "noTransactions": "Você ainda não possui transações recentes.",
     "viewAll": "Ver histórico"
-  }
+  },
+  "errorTitle": "Falha na Transação",
+  "errorMessage": "Não foi possível concluir a transferência neste momento. O sistema pode estar instável.",
+  "schedulePrompt": "Deseja agendar esta transferência para uma data futura?",
+  "scheduleButton": "Agendar transferência",
+  "retryButton": "Tentar novamente"
 }
