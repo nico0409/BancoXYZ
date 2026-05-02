@@ -53,7 +53,11 @@ export function HomeScreen() {
           marginBottom="xl"
         >
           <Box flexDirection="row" alignItems="center">
-            <TouchableOpacity onPress={handleProfilePress} activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={handleProfilePress}
+              activeOpacity={0.7}
+              testID="profile-button"
+            >
               <UserCircle color={theme.colors.primary} size={44} strokeWidth={1.5} />
             </TouchableOpacity>
             <Box marginLeft="m">
