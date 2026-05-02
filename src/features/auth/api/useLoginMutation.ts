@@ -5,6 +5,7 @@ import { LoginFormValues } from '../schemas/loginSchema';
 import { useAuthStore } from '../store/useAuthStore';
 
 import apiClient from '@/api/client';
+import { API_ENDPOINTS } from '@/config/apiEndpoints';
 
 interface LoginResponse {
   token: string;
@@ -20,7 +21,8 @@ export const useLoginMutation = () => {
 
   return useMutation<LoginResponse, AxiosError, LoginFormValues>({
     mutationFn: async (credentials) => {
-      const response = await apiClient.post<LoginResponse>('/login', credentials);
+      const { baseURL, path } = API_ENDPOINTS.login;
+      const response = await apiClient.post<LoginResponse>(path, credentials, { baseURL });
       return response.data;
     },
     onSuccess: (data) => {

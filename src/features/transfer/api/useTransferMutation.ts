@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { TransferFormValues } from '../schemas/transferSchema';
 
 import apiClient from '@/api/client';
+import { API_ENDPOINTS } from '@/config/apiEndpoints';
 
 interface TransferResponse {
   message?: string;
@@ -15,7 +16,8 @@ export const useTransferMutation = () => {
 
   return useMutation<TransferResponse, AxiosError, TransferFormValues>({
     mutationFn: async (transferData) => {
-      const response = await apiClient.post<TransferResponse>('/transfer', transferData);
+      const { baseURL, path } = API_ENDPOINTS.createTransfer;
+      const response = await apiClient.post<TransferResponse>(path, transferData, { baseURL });
       return response.data;
     },
     onSuccess: () => {
