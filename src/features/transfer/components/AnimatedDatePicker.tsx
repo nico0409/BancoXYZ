@@ -63,7 +63,11 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
           {t('newTransfer.dateLabel')}
         </Text>
 
-        <TouchableOpacity onPress={() => setShowPicker((prev) => !prev)} activeOpacity={0.7}>
+        <TouchableOpacity
+          testID="date-picker-button"
+          onPress={() => setShowPicker((prev) => !prev)}
+          activeOpacity={0.7}
+        >
           <Box
             flexDirection="row"
             alignItems="center"

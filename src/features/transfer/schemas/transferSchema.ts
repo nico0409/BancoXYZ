@@ -8,7 +8,13 @@ export const transferSchema = z.object({
       message: 'O valor deve ser um número válido',
     })
     .positive('O valor deve ser maior que zero'),
-  transferDate: z.string().min(10, 'A data é obrigatória'),
+  transferDate: z
+    .string()
+    .min(10, 'A data é obrigatória')
+    .refine((date) => {
+      const today = new Date().toISOString().split('T')[0];
+      return date >= today;
+    }, 'A data não pode ser anterior a hoje'),
 });
 
 export type TransferFormValues = z.infer<typeof transferSchema>;
