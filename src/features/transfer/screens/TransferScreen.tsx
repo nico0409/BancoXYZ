@@ -1,4 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -8,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnimatedDatePicker } from '../components/AnimatedDatePicker';
 import { TransferToggle } from '../components/TransferToggle';
+import { TransferStackParamList } from '../navigation/TransferNavigator';
 import { transferSchema, TransferFormValues } from '../schemas/transferSchema';
 
 import Box from '@/components/Box';
@@ -21,7 +24,7 @@ import { Theme } from '@/theme/theme';
 export function TransferScreen() {
   const { t } = useTranslation();
   const theme = useTheme<Theme>();
-
+  const navigation = useNavigation<NativeStackNavigationProp<TransferStackParamList>>();
   const [isScheduled, setIsScheduled] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -55,7 +58,8 @@ export function TransferScreen() {
       ...data,
       transferDate: isScheduled ? data.transferDate : formatDateToApi(new Date()),
     };
-    console.log('Datos listos para revisión:', finalData);
+
+    navigation.navigate('TransferReview', { transferData: finalData });
   };
 
   return (

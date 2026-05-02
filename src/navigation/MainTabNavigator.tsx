@@ -5,7 +5,7 @@ import React from 'react';
 
 import Box from '@/components/Box';
 import Text from '@/components/Text';
-import { TransferScreen } from '@/features/transfer/screens/TransferScreen';
+import { TransferNavigator } from '@/features/transfer/navigation/TransferNavigator';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { Theme } from '@/theme/theme';
 const HistoryPlaceholder = () => (
@@ -41,7 +41,7 @@ export function MainTabNavigator() {
       />
       <Tab.Screen
         name="TransferTab"
-        component={TransferScreen}
+        component={TransferNavigator}
         options={{
           tabBarIcon: ({ color }) => <Send color={color} size={24} />,
           tabBarLabel: 'Transferir',
