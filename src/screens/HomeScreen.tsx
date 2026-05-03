@@ -23,7 +23,10 @@ export function HomeScreen() {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await queryClient.invalidateQueries({ queryKey: ['balance'] });
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ['balance'] }),
+      queryClient.invalidateQueries({ queryKey: ['transferHistory'] }),
+    ]);
     setRefreshing(false);
   }, [queryClient]);
 

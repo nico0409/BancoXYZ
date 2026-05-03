@@ -90,6 +90,7 @@
     "shareReceipt": "Compartir comprobante",
     "filterNome": "Nombre",
     "filterValor": "Valor",
-    "filterData": "Fecha"
+    "filterData": "Fecha",
+    "error": "No se pudo cargar el historial."
   }
 }
