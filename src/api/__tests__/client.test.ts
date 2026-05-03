@@ -2,6 +2,8 @@ import * as SecureStore from 'expo-secure-store';
 
 import apiClient from '../client';
 
+import { errorStore } from '@/store/useErrorStore';
+
 jest.mock('@/config/env', () => ({
   env: {
     EXPO_PUBLIC_API_URL: 'https://test-api.com',
@@ -54,5 +56,56 @@ describe('apiClient Interceptors', () => {
 
     expect(config.headers.set).not.toHaveBeenCalled();
     expect(modifiedConfig).toBe(config);
+  });
+
+  it('dispara un error de bloqueo si SecureStore falla', async () => {
+    (SecureStore.getItemAsync as jest.Mock).mockRejectedValue(new Error('SecureStore failure'));
+
+    const setBlockingErrorSpy = jest.spyOn(errorStore.getState(), 'setBlockingError');
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const requestInterceptor = (apiClient.interceptors.request as any).handlers[0].fulfilled;
+
+    try {
+      await requestInterceptor({});
+    } catch {
+      expect(setBlockingErrorSpy).toHaveBeenCalledWith('AUTH_ERROR');
+    }
+  });
+
+  describe('Response Interceptor Errors', () => {
+    it('dispara un error de bloqueo en errores 500+', async () => {
+      const setBlockingErrorSpy = jest.spyOn(errorStore.getState(), 'setBlockingError');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const responseInterceptor = (apiClient.interceptors.response as any).handlers[0].rejected;
+
+      const error = {
+        response: { status: 500 },
+      };
+
+      try {
+        await responseInterceptor(error);
+      } catch {
+        expect(setBlockingErrorSpy).toHaveBeenCalledWith('SERVER_DOWN');
+      }
+    });
+
+    it('dispara un error de bloqueo en errores 400', async () => {
+      const setBlockingErrorSpy = jest.spyOn(errorStore.getState(), 'setBlockingError');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const responseInterceptor = (apiClient.interceptors.response as any).handlers[0].rejected;
+
+      const error = {
+        response: { status: 400 },
+      };
+
+      try {
+        await responseInterceptor(error);
+      } catch {
+        expect(setBlockingErrorSpy).toHaveBeenCalledWith('UNKNOWN_ERROR');
+      }
+    });
   });
 });
