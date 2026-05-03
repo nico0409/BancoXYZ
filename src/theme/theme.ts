@@ -6,11 +6,13 @@ const palette = {
   purpleLight: '#EDE9FE',
   white: '#FFFFFF',
   slate50: '#F8FAFC',
+  slate200: '#E2E8F0',
   slate800: '#0F172A',
   slate500: '#64748B',
   red500: '#EF4444',
   green500: '#10B981',
   transparent: 'transparent',
+  black: '#000000',
 };
 
 const theme = createTheme({
@@ -19,11 +21,13 @@ const theme = createTheme({
     primaryLight: palette.purpleLight,
     mainBackground: palette.white,
     cardBackground: palette.slate50,
+    mainBorder: palette.slate200,
     text: palette.slate800,
     textSecondary: palette.slate500,
     error: palette.red500,
     success: palette.green500,
     transparent: palette.transparent,
+    shadow: palette.black,
   },
 
   spacing: {
