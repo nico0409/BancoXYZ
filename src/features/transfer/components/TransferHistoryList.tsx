@@ -98,7 +98,7 @@ export function TransferHistoryList({
   if (isLoading) {
     return (
       <Box flex={1} justifyContent="center" alignItems="center">
-        <ActivityIndicator size="large" color={theme.colors.primary} />
+        <ActivityIndicator size="large" color={theme.colors.primary} testID="loading-indicator" />
       </Box>
     );
   }

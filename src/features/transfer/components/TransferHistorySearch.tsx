@@ -139,7 +139,11 @@ export function TransferHistorySearch({
       </Box>
 
       <Box marginLeft="m" style={{ position: 'relative', zIndex: 20, elevation: 20 }}>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => setShowFilters(!showFilters)}>
+        <TouchableOpacity
+          testID="sliders-button"
+          activeOpacity={0.7}
+          onPress={() => setShowFilters(!showFilters)}
+        >
           <Box
             width={50}
             height={50}

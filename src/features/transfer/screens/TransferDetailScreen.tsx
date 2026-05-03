@@ -3,7 +3,7 @@ import { useTheme } from '@shopify/restyle';
 import { ArrowLeft, Share2 } from 'lucide-react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, ScrollView } from 'react-native';
+import { TouchableOpacity, ScrollView, Share } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { HistoryStackParamList } from '../navigation/HistoryNavigator';
@@ -32,6 +32,16 @@ export function TransferDetailScreen() {
   const formatCurrency = (value: number, currency: string) => {
     const locale = i18n.language.includes('es') ? 'es-CO' : 'pt-BR';
     return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
+  };
+
+  const handleShare = async () => {
+    if (!transfer) return;
+    try {
+      const message = `${t('history.shareReceipt') || 'Comprobante de Transferencia'}\n\n${t('history.recipientName') || 'Nombre'}: ${transfer.payeer.name}\n${t('history.recipientDocument') || 'Documento'}: ${transfer.payeer.document}\n${t('history.sentValue') || 'Valor'}: ${formatCurrency(transfer.value, transfer.currency)}\n${t('history.filterData') || 'Fecha'}: ${transfer.date}`;
+      await Share.share({ message });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (!transfer) return null;
@@ -131,7 +141,7 @@ export function TransferDetailScreen() {
             <Button
               variant="outline"
               label={t('history.shareReceipt') || 'Compartir comprobante'}
-              onPress={() => {}}
+              onPress={handleShare}
               icon={<Share2 size={20} color={theme.colors.primary} />}
             />
           </Box>
