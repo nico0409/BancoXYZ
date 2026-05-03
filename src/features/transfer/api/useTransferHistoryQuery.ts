@@ -8,6 +8,11 @@ export interface Payeer {
   name: string;
 }
 
+interface TransferResponse {
+  message: string;
+  transfers: TransferItem[];
+}
+
 export interface TransferItem {
   value: number;
   date: string;
@@ -19,9 +24,13 @@ export const useTransferHistoryQuery = () => {
   return useQuery({
     queryKey: ['transferHistory'],
     queryFn: async () => {
-      const { baseURL, path } = API_ENDPOINTS.getTransferHistory;
-      const response = await apiClient.get<TransferItem[]>(path, { baseURL });
-      return response.data;
+      try {
+        const { baseURL, path } = API_ENDPOINTS.getTransferHistory;
+        const response = await apiClient.get<TransferResponse>(path, { baseURL });
+        return response.data.transfers;
+      } catch (error) {
+        throw error;
+      }
     },
 
     staleTime: 1000 * 60 * 3,

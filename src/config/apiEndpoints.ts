@@ -31,7 +31,7 @@ export const API_ENDPOINTS = {
   },
   getTransferHistory: {
     baseURL: env.EXPO_PUBLIC_TRANSFER_HISTORY_API_URL,
-    path: '/transferlist',
+    path: '/transferList',
     method: 'GET',
   },
 } as const;
