@@ -1,20 +1,12 @@
 import { ThemeProvider } from '@shopify/restyle';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { queryClient } from '@/api/queryClient';
 import { AppNavigator } from '@/navigation/AppNavigator';
 import theme from '@/theme/theme';
 import '@/locales';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 2,
-      staleTime: 1000 * 60 * 5,
-    },
-  },
-});
 
 export default function App() {
   return (

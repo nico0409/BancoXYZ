@@ -1,7 +1,10 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
+import { queryClient } from '@/api/queryClient';
 import { env } from '@/config/env';
+import { useAuthStore } from '@/features/auth/store/useAuthStore';
+import { errorStore } from '@/store/useErrorStore';
 
 const apiClient = axios.create({
   baseURL: env.EXPO_PUBLIC_API_URL,
@@ -20,7 +23,8 @@ apiClient.interceptors.request.use(
         config.headers.set('Authorization', `Bearer ${token}`);
       }
     } catch (error) {
-      console.error('Error al recuperar el token de seguridad:', error);
+      errorStore.getState().setBlockingError('AUTH_ERROR');
+      return Promise.reject(error);
     }
     return config;
   },
@@ -34,9 +38,21 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso denegado: Token inválido o expirado');
+    const isLoginEndpoint = error.config?.url?.includes('/login');
+
+    if (isLoginEndpoint) {
+      return Promise.reject(error);
     }
+
+    if (!error.response || error.response.status >= 500) {
+      errorStore.getState().setBlockingError('SERVER_DOWN');
+    } else if (error.response.status === 400) {
+      errorStore.getState().setBlockingError('UNKNOWN_ERROR');
+    } else if (error.response.status === 401 || error.response.status === 403) {
+      useAuthStore.getState().logout();
+      queryClient.clear();
+    }
+
     return Promise.reject(error);
   },
 );
