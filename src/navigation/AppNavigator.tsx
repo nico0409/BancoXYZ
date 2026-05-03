@@ -9,11 +9,14 @@ import { MainTabNavigator } from './MainTabNavigator';
 import Box from '@/components/Box';
 import { useAutoLogout } from '@/features/auth/hooks/useAutoLogout';
 import { useAuthStore } from '@/features/auth/store/useAuthStore';
+import BlockingErrorScreen from '@/screens/BlockingErrorScreen';
+import { useErrorStore } from '@/store/useErrorStore';
 import { Theme } from '@/theme/theme';
 
 export function AppNavigator() {
   useAutoLogout();
   const { token, isRestoring, restoreSession } = useAuthStore();
+  const { isBlockingError } = useErrorStore();
   const theme = useTheme<Theme>();
 
   useEffect(() => {
@@ -26,6 +29,10 @@ export function AppNavigator() {
         <ActivityIndicator size="large" color={theme.colors.primary} />
       </Box>
     );
+  }
+
+  if (isBlockingError) {
+    return <BlockingErrorScreen />;
   }
 
   return (
