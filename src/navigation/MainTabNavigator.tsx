@@ -3,16 +3,10 @@ import { useTheme } from '@shopify/restyle';
 import { Home, Send, List } from 'lucide-react-native';
 import React from 'react';
 
-import Box from '@/components/Box';
-import Text from '@/components/Text';
+import { HistoryNavigator } from '@/features/transfer/navigation/HistoryNavigator';
 import { TransferNavigator } from '@/features/transfer/navigation/TransferNavigator';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { Theme } from '@/theme/theme';
-const HistoryPlaceholder = () => (
-  <Box flex={1} justifyContent="center" alignItems="center">
-    <Text>Historial</Text>
-  </Box>
-);
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +43,7 @@ export function MainTabNavigator() {
       />
       <Tab.Screen
         name="HistoryTab"
-        component={HistoryPlaceholder}
+        component={HistoryNavigator}
         options={{
           tabBarIcon: ({ color }) => <List color={color} size={24} />,
           tabBarLabel: 'Histórico',

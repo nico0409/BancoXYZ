@@ -29,6 +29,11 @@ export const API_ENDPOINTS = {
     path: '/transfer',
     method: 'POST',
   },
+  getTransferHistory: {
+    baseURL: env.EXPO_PUBLIC_TRANSFER_HISTORY_API_URL,
+    path: '/transferList',
+    method: 'GET',
+  },
 } as const;
 
 /** Tipo utilitario: extrae las claves del mapa */

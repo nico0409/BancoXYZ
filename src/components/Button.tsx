@@ -11,12 +11,14 @@ interface ButtonProps extends TouchableOpacityProps {
   label: string;
   variant?: 'primary' | 'secondary' | 'outline';
   isLoading?: boolean;
+  icon?: React.ReactNode;
 }
 
 export default function Button({
   label,
   variant = 'primary',
   isLoading = false,
+  icon,
   disabled,
   ...props
 }: ButtonProps) {
@@ -57,6 +59,7 @@ export default function Button({
         borderRadius="m"
         alignItems="center"
         justifyContent="center"
+        flexDirection="row"
         borderWidth={variant === 'outline' ? 1 : 0}
         borderColor={variant === 'outline' ? styles.border : undefined}
         opacity={isDisabled ? 0.6 : 1}
@@ -64,9 +67,12 @@ export default function Button({
         {isLoading ? (
           <ActivityIndicator color={theme.colors[styles.text]} />
         ) : (
-          <Text variant="subheader" fontSize={16} color={styles.text}>
-            {label}
-          </Text>
+          <>
+            {icon && <Box marginRight="s">{icon}</Box>}
+            <Text variant="subheader" fontSize={16} color={styles.text}>
+              {label}
+            </Text>
+          </>
         )}
       </Box>
     </TouchableOpacity>

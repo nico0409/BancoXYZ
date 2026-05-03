@@ -23,7 +23,7 @@ export function HomeScreen() {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await queryClient.invalidateQueries();
+    await queryClient.invalidateQueries({ queryKey: ['balance'] });
     setRefreshing(false);
   }, [queryClient]);
 

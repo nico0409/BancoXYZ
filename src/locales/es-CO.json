@@ -63,5 +63,23 @@
     "scheduledTitle": "¡Transferencia Agendada!",
     "scheduledSubtitle": "Tu transferencia fue programada y se ejecutará en la fecha indicada.",
     "backToHomeButton": "Volver al Inicio"
+  },
+  "history": {
+    "title": "Historial de Transferencias",
+    "detailTitle": "Detalle del Movimiento",
+    "searchNamePlaceholder": "Buscar por nombre del destinatario...",
+    "searchValuePlaceholder": "Valor exacto",
+    "searchDatePlaceholder": "Fecha (YYYY-MM-DD)",
+    "emptyState": "No se encontraron transferencias con estos filtros.",
+    "sentValue": "Valor enviado",
+    "recipientInfo": "Información del Destinatario",
+    "recipientName": "Nombre",
+    "recipientDocument": "Documento",
+    "currency": "Moneda",
+    "status": "Estado",
+    "shareReceipt": "Compartir comprobante",
+    "filterNome": "Nombre",
+    "filterValor": "Valor",
+    "filterData": "Fecha"
   }
 }
