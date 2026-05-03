@@ -1,8 +1,9 @@
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useTheme } from '@shopify/restyle';
 import { Search } from 'lucide-react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, ActivityIndicator, RefreshControl } from 'react-native';
+import { FlatList, ActivityIndicator, RefreshControl, TouchableOpacity } from 'react-native';
 
 import { TransferItem } from '../api/useTransferHistoryQuery';
 
@@ -37,6 +38,7 @@ export function TransferHistoryList({
 }: TransferHistoryListProps) {
   const { t, i18n } = useTranslation();
   const theme = useTheme<Theme>();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   const formatCurrency = (value: number, currency: string) => {
     const locale = i18n.language.includes('es') ? 'es-CO' : 'pt-BR';
@@ -44,48 +46,53 @@ export function TransferHistoryList({
   };
 
   const renderItem = ({ item }: { item: TransferItem }) => (
-    <Box
-      backgroundColor="mainBackground"
-      paddingVertical="m"
-      paddingHorizontal="m"
-      borderRadius="xl"
-      marginBottom="m"
-      flexDirection="row"
-      alignItems="center"
-      style={{
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-        elevation: 4,
-      }}
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('TransferDetail', { transfer: item })}
     >
       <Box
-        width={48}
-        height={48}
-        borderRadius="round"
-        backgroundColor="primaryLight"
-        justifyContent="center"
+        backgroundColor="mainBackground"
+        paddingVertical="m"
+        paddingHorizontal="m"
+        borderRadius="xl"
+        marginBottom="m"
+        flexDirection="row"
         alignItems="center"
+        style={{
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 6,
+          elevation: 4,
+        }}
       >
-        <Text color="primary" fontWeight="bold" fontSize={18}>
-          {getInitials(item.payeer.name)}
+        <Box
+          width={48}
+          height={48}
+          borderRadius="round"
+          backgroundColor="primaryLight"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Text color="primary" fontWeight="bold" fontSize={18}>
+            {getInitials(item.payeer.name)}
+          </Text>
+        </Box>
+
+        <Box flex={1} marginLeft="m">
+          <Text variant="body" color="text" fontWeight="bold" fontSize={16}>
+            {item.payeer.name}
+          </Text>
+          <Text variant="caption" color="textSecondary" marginTop="xs">
+            Date {item.date}
+          </Text>
+        </Box>
+
+        <Text color="primary" fontWeight="bold" fontSize={16}>
+          {formatCurrency(item.value, item.currency)}
         </Text>
       </Box>
-
-      <Box flex={1} marginLeft="m">
-        <Text variant="body" color="text" fontWeight="bold" fontSize={16}>
-          {item.payeer.name}
-        </Text>
-        <Text variant="caption" color="textSecondary" marginTop="xs">
-          Date {item.date}
-        </Text>
-      </Box>
-
-      <Text color="primary" fontWeight="bold" fontSize={16}>
-        {formatCurrency(item.value, item.currency)}
-      </Text>
-    </Box>
+    </TouchableOpacity>
   );
 
   if (isLoading) {
