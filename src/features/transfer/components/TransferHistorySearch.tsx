@@ -183,7 +183,7 @@ export function TransferHistorySearch({
                 color={activeFilters.name ? 'primary' : 'textSecondary'}
                 fontWeight={activeFilters.name ? 'bold' : 'normal'}
               >
-                {activeFilters.name ? '✓ ' : '  '} Nome
+                {activeFilters.name ? '✓ ' : '  '} {t('history.filterNome') || 'Nome'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => toggleFilter('value')} style={{ paddingVertical: 12 }}>
@@ -192,7 +192,7 @@ export function TransferHistorySearch({
                 color={activeFilters.value ? 'primary' : 'textSecondary'}
                 fontWeight={activeFilters.value ? 'bold' : 'normal'}
               >
-                {activeFilters.value ? '✓ ' : '  '} Valor
+                {activeFilters.value ? '✓ ' : '  '} {t('history.filterValor') || 'Valor'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => toggleFilter('date')} style={{ paddingVertical: 12 }}>
@@ -201,7 +201,7 @@ export function TransferHistorySearch({
                 color={activeFilters.date ? 'primary' : 'textSecondary'}
                 fontWeight={activeFilters.date ? 'bold' : 'normal'}
               >
-                {activeFilters.date ? '✓ ' : '  '} Data
+                {activeFilters.date ? '✓ ' : '  '} {t('history.filterData') || 'Data'}
               </Text>
             </TouchableOpacity>
           </Box>
