@@ -1,7 +1,17 @@
 {
   "common": {
     "accept": "Aceptar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "error_title": "Algo salió mal",
+    "error_message": "Disculpe las molestias, vuelve a intentarlo más tarde",
+    "retry": "Reintentar"
+  },
+  "errors": {
+    "AUTH_ERROR": "Error al recuperar la sesión. Por favor, inicia sesión de nuevo.",
+    "SERVER_DOWN": "El servidor no responde. Por favor, inténtalo más tarde.",
+    "MAINTENANCE": "Estamos en mantenimiento. Volveremos pronto.",
+    "NETWORK_ERROR": "Ocurrió un error de conexión. Verifica tu internet.",
+    "UNKNOWN_ERROR": "Ocurrió un error inesperado."
   },
   "auth": {
     "welcomeTitle": "Bienvenido a BancoXYZ",
