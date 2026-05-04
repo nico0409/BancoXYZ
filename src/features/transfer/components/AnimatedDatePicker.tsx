@@ -14,9 +14,10 @@ interface AnimatedDatePickerProps {
   visible: boolean;
   value: Date;
   onChange: (event: DateTimePickerEvent, date?: Date) => void;
+  onOpen?: () => void;
 }
 
-export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePickerProps) {
+export function AnimatedDatePicker({ visible, value, onChange, onOpen }: AnimatedDatePickerProps) {
   const { t, i18n } = useTranslation();
   const theme = useTheme<Theme>();
   const [showPicker, setShowPicker] = useState(false);
@@ -65,7 +66,10 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
 
         <TouchableOpacity
           testID="date-picker-button"
-          onPress={() => setShowPicker((prev) => !prev)}
+          onPress={() => {
+            setShowPicker(true);
+            onOpen?.();
+          }}
           activeOpacity={0.7}
         >
           <Box
@@ -83,19 +87,25 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
         </TouchableOpacity>
 
         {showPicker && (
-          <DateTimePicker
-            value={value}
-            mode="date"
-            display="spinner"
-            minimumDate={tomorrow}
-            onChange={handleChange}
-            positiveButton={{ label: t('common.accept'), textColor: theme.colors.primary }}
-            negativeButton={{ label: t('common.cancel'), textColor: theme.colors.textSecondary }}
-          />
-        )}
-
-        {showPicker && Platform.OS === 'ios' && (
-          <Button label="Confirmar" onPress={() => setShowPicker(false)} variant="outline" />
+          <Box marginTop="s">
+            <DateTimePicker
+              value={value}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              minimumDate={tomorrow}
+              onChange={handleChange}
+              style={Platform.OS === 'ios' ? { height: 120, width: '100%' } : {}}
+            />
+            {Platform.OS === 'ios' && (
+              <Box marginTop="s">
+                <Button
+                  label={t('common.accept')}
+                  onPress={() => setShowPicker(false)}
+                  variant="outline"
+                />
+              </Box>
+            )}
+          </Box>
         )}
       </Box>
     </Animated.View>

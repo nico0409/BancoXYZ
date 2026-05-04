@@ -95,7 +95,7 @@ export function RecentTransfers() {
               borderBottomWidth={index === recentTransactions.length - 1 ? 0 : 1}
               borderBottomColor="mainBackground"
             >
-              <Box flexDirection="row" alignItems="center">
+              <Box flexDirection="row" alignItems="center" flex={1} marginRight="s">
                 <Box
                   backgroundColor="primaryLight"
                   padding="s"
@@ -105,8 +105,14 @@ export function RecentTransfers() {
                 >
                   <ArrowUpRight color={theme.colors.primary} size={20} />
                 </Box>
-                <Box>
-                  <Text variant="body" color="text" fontWeight="bold" fontSize={16}>
+                <Box flex={1}>
+                  <Text
+                    variant="body"
+                    color="text"
+                    fontWeight="bold"
+                    fontSize={16}
+                    numberOfLines={1}
+                  >
                     {tx.payeer.name}
                   </Text>
                   <Text variant="caption" color="textSecondary">
@@ -114,7 +120,13 @@ export function RecentTransfers() {
                   </Text>
                 </Box>
               </Box>
-              <Text variant="body" color="primary" fontWeight="bold" fontSize={16}>
+              <Text
+                variant="body"
+                color="primary"
+                fontWeight="bold"
+                fontSize={16}
+                textAlign="right"
+              >
                 - {formatCurrency(tx.value, tx.currency)}
               </Text>
             </Box>

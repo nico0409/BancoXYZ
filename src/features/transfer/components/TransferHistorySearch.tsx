@@ -43,6 +43,7 @@ export function TransferHistorySearch({
         if (key === 'date') {
           setSearchDate('');
           setSearchDateObj(null);
+          setShowDatePicker(false);
         }
       }
       return next;
@@ -133,6 +134,27 @@ export function TransferHistorySearch({
             </Text>
           </Box>
         )}
+
+        {showDatePicker && (
+          <Box marginTop="s">
+            <DateTimePicker
+              value={searchDateObj || new Date()}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={(event, date) => {
+                if (Platform.OS === 'android') {
+                  setShowDatePicker(false);
+                }
+                if (date && event.type !== 'dismissed') {
+                  setSearchDateObj(date);
+                  setSearchDate(date.toISOString().split('T')[0]); // YYYY-MM-DD
+                } else if (Platform.OS === 'ios') {
+                  setShowDatePicker(false);
+                }
+              }}
+            />
+          </Box>
+        )}
       </Box>
 
       <Box marginLeft="m" style={{ position: 'relative', zIndex: 20, elevation: 20 }}>
@@ -208,25 +230,6 @@ export function TransferHistorySearch({
           </Box>
         )}
       </Box>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={searchDateObj || new Date()}
-          mode="date"
-          display="default"
-          onChange={(event, date) => {
-            if (Platform.OS === 'android') {
-              setShowDatePicker(false);
-            }
-            if (date && event.type !== 'dismissed') {
-              setSearchDateObj(date);
-              setSearchDate(date.toISOString().split('T')[0]); // YYYY-MM-DD
-            } else if (Platform.OS === 'ios') {
-              setShowDatePicker(false);
-            }
-          }}
-        />
-      )}
     </Box>
   );
 }
