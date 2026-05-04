@@ -23,8 +23,5 @@ export const useTransferMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['balance'] });
     },
-    onError: (error) => {
-      console.error('Falha na transferência [Código]:', error.response?.status);
-    },
   });
 };

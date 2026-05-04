@@ -11,6 +11,7 @@ import { HistoryStackParamList } from '../navigation/HistoryNavigator';
 import Box from '@/components/Box';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
+import { errorStore } from '@/store/useErrorStore';
 import { Theme } from '@/theme/theme';
 
 const getInitials = (name: string) => {
@@ -39,8 +40,10 @@ export function TransferDetailScreen() {
     try {
       const message = `${t('history.shareReceipt') || 'Comprobante de Transferencia'}\n\n${t('history.recipientName') || 'Nombre'}: ${transfer.payeer.name}\n${t('history.recipientDocument') || 'Documento'}: ${transfer.payeer.document}\n${t('history.sentValue') || 'Valor'}: ${formatCurrency(transfer.value, transfer.currency)}\n${t('history.filterData') || 'Fecha'}: ${transfer.date}`;
       await Share.share({ message });
-    } catch (error) {
-      console.error(error);
+    } catch {
+      errorStore
+        .getState()
+        .setBlockingError('UNKNOWN_ERROR', 'Ocurrio un error al compartir el comprobante', false);
     }
   };
 
