@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
@@ -25,6 +25,8 @@ export function TransferScreen() {
   const { t } = useTranslation();
   const theme = useTheme<Theme>();
   const navigation = useNavigation<NativeStackNavigationProp<TransferStackParamList>>();
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isScheduled, setIsScheduled] = useState(false);
   const [tomorrow] = useState(() => new Date(Date.now() + 86400000));
   const [date, setDate] = useState(tomorrow);
@@ -54,6 +56,14 @@ export function TransferScreen() {
     }
   }, [balanceData?.currency, setValue]);
 
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const formatDateToApi = (selectedDate: Date) => selectedDate.toISOString().split('T')[0];
 
   const onSubmit = (data: TransferFormValues) => {
@@ -79,7 +89,11 @@ export function TransferScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.mainBackground }}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+        <ScrollView
+          ref={scrollViewRef}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
           <Box
             flex={1}
             backgroundColor="mainBackground"
@@ -145,6 +159,14 @@ export function TransferScreen() {
                       shouldValidate: true,
                     });
                   }
+                }}
+                onOpen={() => {
+                  if (scrollTimeoutRef.current) {
+                    clearTimeout(scrollTimeoutRef.current);
+                  }
+                  scrollTimeoutRef.current = setTimeout(() => {
+                    scrollViewRef.current?.scrollToEnd({ animated: true });
+                  }, 50);
                 }}
               />
 

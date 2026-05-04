@@ -14,9 +14,10 @@ interface AnimatedDatePickerProps {
   visible: boolean;
   value: Date;
   onChange: (event: DateTimePickerEvent, date?: Date) => void;
+  onOpen?: () => void;
 }
 
-export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePickerProps) {
+export function AnimatedDatePicker({ visible, value, onChange, onOpen }: AnimatedDatePickerProps) {
   const { t, i18n } = useTranslation();
   const theme = useTheme<Theme>();
   const [showPicker, setShowPicker] = useState(false);
@@ -65,7 +66,10 @@ export function AnimatedDatePicker({ visible, value, onChange }: AnimatedDatePic
 
         <TouchableOpacity
           testID="date-picker-button"
-          onPress={() => setShowPicker((prev) => !prev)}
+          onPress={() => {
+            setShowPicker(true);
+            onOpen?.();
+          }}
           activeOpacity={0.7}
         >
           <Box
