@@ -62,11 +62,10 @@ export function TransferHistorySearch({
             flexDirection="row"
             alignItems="center"
             borderWidth={1}
-            borderColor="textSecondary"
+            borderColor="mainBorder"
             borderRadius="round"
             paddingHorizontal="m"
             height={50}
-            style={{ borderColor: '#E2E8F0' }}
           >
             <Search color={theme.colors.textSecondary} size={16} />
             <RNTextInput
@@ -89,11 +88,10 @@ export function TransferHistorySearch({
             flexDirection="row"
             alignItems="center"
             borderWidth={1}
-            borderColor="textSecondary"
+            borderColor="mainBorder"
             borderRadius="round"
             paddingHorizontal="m"
             height={50}
-            style={{ borderColor: '#E2E8F0' }}
           >
             <RNTextInput
               placeholder={t('history.searchValuePlaceholder')}
@@ -116,11 +114,10 @@ export function TransferHistorySearch({
               flexDirection="row"
               alignItems="center"
               borderWidth={1}
-              borderColor="textSecondary"
+              borderColor="mainBorder"
               borderRadius="round"
               paddingHorizontal="m"
               height={50}
-              style={{ borderColor: '#E2E8F0' }}
             >
               <Text color={searchDate ? 'text' : 'textSecondary'} fontSize={16} numberOfLines={1}>
                 {searchDate || t('history.searchDatePlaceholder')}
@@ -152,7 +149,7 @@ export function TransferHistorySearch({
             justifyContent="center"
             alignItems="center"
             style={{
-              shadowColor: '#000',
+              shadowColor: theme.colors.shadow,
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.1,
               shadowRadius: 4,
@@ -173,8 +170,8 @@ export function TransferHistorySearch({
               position: 'absolute',
               top: 60,
               right: 0,
-              width: 140,
-              shadowColor: '#000',
+              width: 150,
+              shadowColor: theme.colors.shadow,
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.15,
               shadowRadius: 8,

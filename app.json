@@ -1,25 +1,32 @@
 {
   "expo": {
     "name": "BancoXYZ",
-    "slug": "BancoXYZ",
+    "slug": "bancoxyz-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#FFFFFF",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFFFFF"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bancoxyz.app",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "BancoXYZ requiere acceso a FaceID para permitirte iniciar sesión de forma segura y rápida en tu cuenta."
+      }
     },
     "android": {
+      "package": "com.bancoxyz.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FFFFFF"
       },
+      "permissions": ["USE_BIOMETRIC", "USE_FINGERPRINT"],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
@@ -30,7 +37,21 @@
       "expo-secure-store",
       "@sentry/react-native",
       "@react-native-community/datetimepicker",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "BancoXYZ requiere acceso a FaceID para proteger tus transacciones."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
     ]
   }
 }

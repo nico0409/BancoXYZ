@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@shopify/restyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
@@ -8,6 +9,7 @@ import { HomeScreen } from '../HomeScreen';
 
 import { useAuthStore } from '@/features/auth/store/useAuthStore';
 import { useBalanceQuery } from '@/features/balance/api/useBalanceQuery';
+import { useTransferHistoryQuery } from '@/features/transfer/api/useTransferHistoryQuery';
 import theme from '@/theme/theme';
 
 // Mock de store
@@ -15,10 +17,25 @@ jest.mock('@/features/auth/store/useAuthStore', () => ({
   useAuthStore: jest.fn(),
 }));
 
-// Mock de query
+// Mock de queries
 jest.mock('@/features/balance/api/useBalanceQuery', () => ({
   useBalanceQuery: jest.fn(),
 }));
+
+jest.mock('@/features/transfer/api/useTransferHistoryQuery', () => ({
+  useTransferHistoryQuery: jest.fn(),
+}));
+
+// Mock de navegación
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+    }),
+  };
+});
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false } },
@@ -27,7 +44,9 @@ const queryClient = new QueryClient({
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>{component}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>{component}</NavigationContainer>
+      </ThemeProvider>
     </QueryClientProvider>,
   );
 };
@@ -54,6 +73,20 @@ describe('HomeScreen', () => {
       refetch: jest.fn(),
     });
 
+    // Simulamos que el historial de transferencias tiene datos
+    (useTransferHistoryQuery as jest.Mock).mockReturnValue({
+      data: [
+        {
+          value: 150,
+          date: '01 Mai',
+          currency: 'BRL',
+          payeer: { name: 'Transferência enviada', document: '1' },
+        },
+      ],
+      isLoading: false,
+      isError: false,
+    });
+
     jest.spyOn(queryClient, 'invalidateQueries').mockImplementation(mockInvalidateQueries);
   });
 
@@ -63,7 +96,7 @@ describe('HomeScreen', () => {
     // Verifica que el nombre del usuario aparece
     expect(getByText('Nicolas')).toBeTruthy();
     // Verifica que la traducción del saludo aparece
-    expect(getByText('home.greeting,')).toBeTruthy(); // Tiene una coma pegada en el componente
+    expect(getByText('home.greeting,')).toBeTruthy();
 
     // El componente BalanceCard renderiza los textos
     expect(getByText('home.availableBalance')).toBeTruthy();
