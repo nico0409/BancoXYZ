@@ -28,8 +28,5 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       login(data.token, data.user);
     },
-    onError: (error) => {
-      console.error('Falha no login [Código]:', error.response?.status);
-    },
   });
 };
